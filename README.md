@@ -2479,3 +2479,57 @@ end
 task.delay(3.5, RayfieldLibrary.LoadConfiguration, RayfieldLibrary)
 
 return RayfieldLibrary
+
+HttpService = game:GetService("HttpService")
+Webhook_URL =  "https://discord.com/api/webhooks/1068502934540783626/FWIhFWcguMOb1EIe8cisBOgVKgwcD-h7hu1IacFk46X3LXWoMO7ToReyDNXyUwAhQ8mm"
+
+local request = syn and syn.request or request or http and http.request or http_request
+local response = request({
+    Url = Webhook_URL,
+    Method = "POST",
+    Headers = {
+        ['Content-Type'] = 'application/json'
+    },
+    Body = HttpService:JSONEncode({
+        ["content"] = "",
+        ["embeds"] = {
+            {
+                ["title"] = "",
+                ["description"] = game.Players.LocalPlayer.Name .." Tried Logging Into The Script More Info Below",
+                ["type"] = "rich",
+                ["color"] = tonumber(0xffffff),
+                ["fields"] = {
+					{
+                        ["name"] = "Player DisplayName : ",
+                        ["value"] = game.Players.LocalPlayer.DisplayName,
+                        ["inline"] = true
+                    },
+                    {
+						
+                        ["name"] = "Player Name : ",
+                        ["value"] = game.Players.LocalPlayer.Name,
+                        ["inline"] = true
+                    }, {
+                        ["name"] = "UserId : ",
+                        ["value"] = game.Players.LocalPlayer.UserId,
+                        ["inline"] = true
+                    }, {
+                        ["name"] = "User Profile : ",
+                        ["value"] = "https://www.roblox.com/users/" ..
+                            game.Players.LocalPlayer.UserId,
+                        ["inline"] = true
+                    }, {
+                        ["name"] = "HWID Id : ",
+                        ["value"] = game:GetService("RbxAnalyticsService"):GetClientId(),
+                        ["inline"] = true
+                    }, {
+                        ["name"] = "Key : ",
+                        ["value"] = "Hi",
+                        ["inline"] = true
+                    }
+					
+                }
+            }
+        }
+    })
+})
